@@ -1,10 +1,13 @@
 // import preact
 import { h, render, Component } from 'preact';
+
 // import stylesheets for ipad & button
 import style from './style';
 import style_iphone from '../button/style_iphone';
+
 // import jquery for API calls
 import $ from 'jquery';
+
 // import the Button component
 import Button from '../button';
 
@@ -19,6 +22,7 @@ export default class Iphone extends Component {
 		this.state.icon = "";
 		// button display state
 		//this.setState({ display: true });
+		//There was a button to show the weather and I remove it
 		this.fetchWeatherData();
 		this.parseResponse
 	}
@@ -58,12 +62,18 @@ export default class Iphone extends Component {
 			</div>
 		);
 	}
+	
 
 	parseResponse = (parsed_json) => {
+		//There are lots of information can be added at link below
+		//https://openweathermap.org/api/one-call-3
+		
 		var location = parsed_json['name'];
 		var temp_c = parsed_json['main']['temp'];
 		var conditions = parsed_json['weather']['0']['description'];
-		var icon = parsed_json['weather']['0']['icon'];
+		var icon = parsed_json['weather']['0']['icon']; 
+		//the icon value is like "04d","10d"... you can found more information at the link below
+		// https://openweathermap.org/weather-conditions#How-to-get-icon-URL
 
 		// set states for fields so they could be rendered later on
 		this.setState({
@@ -73,14 +83,15 @@ export default class Iphone extends Component {
 			icon : icon
 		});
 	}
-
+	//get what day is today "Monday"...
 	getDay(){
 		const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 		const d = new Date();
 		let day = weekday[d.getDay()];
 		return day;
 	}
-
+	
+	//get date in month 
 	getDate(){
 		const t = new Date();
 		let date = t.getDate();
@@ -94,8 +105,4 @@ export default class Iphone extends Component {
 		return month;
 	}
 
-	getIcon(){
-		var url = "./assets/icons/09d.png"
-		return url
-	}
 }
