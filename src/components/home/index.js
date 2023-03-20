@@ -1,14 +1,12 @@
 // import preact
-import { h, render,props, Component } from 'preact';
-// import stylesheets
-import style from './style';
+import { h,props, Component } from 'preact';
+import {Router, Link, Route} from 'preact-router';
 // import jquery for API calls
 import $ from 'jquery';
-import {Router, Link, Route} from 'preact-router';
-import More from '../more';
+// import stylesheets
+import style from './style';
 
 export default class Home extends Component {
-
 
 	// a constructor with initial set states
 	constructor(props){
@@ -16,13 +14,24 @@ export default class Home extends Component {
 		// temperature state
 		this.state.temp = "";
 		this.state.icon = "";
+		this.state.defaultLocate = 'London';
+		this.state.locate = this.props.where;
+		this.state.where = this.props.where;
 		this.fetchWeatherData();
 		
 	}
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
+		//search result coording to the search value
+		//if no result, display weather in default location 'London'
+		if(!this.state.locate){
+			var urlCity = this.state.defaultLocate
+		}else{
+			var urlCity = this.state.locate
+		}
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=922c5f25670143d722124085ed780adb";
+		var url = "http://api.openweathermap.org/data/2.5/weather?q=" + urlCity + "&units=metric&APPID=922c5f25670143d722124085ed780adb";
+
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -40,7 +49,6 @@ export default class Home extends Component {
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 		const icon = this.state.icon;
 		const locate = this.state.locate;
-		
 		// display all weather data
 		return (
 			<div class={ style.body}>
@@ -56,7 +64,7 @@ export default class Home extends Component {
 				<Router>
 					<Route path="/more/:where?" />
 				</Router>
-				<Link class={style.Link} href={`/more/?where=${locate}`} Now={this.state}>More</Link>
+				<Link class={style.Link} href={`/more/?where=${locate}`}>More</Link>
 
 				
 			</div>
@@ -86,7 +94,7 @@ export default class Home extends Component {
 			feel: feel
 		});
 	}
-
+	// 3 methods to display the date
 	getDay(){
 		const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 		const d = new Date();

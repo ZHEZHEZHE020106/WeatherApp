@@ -1,6 +1,8 @@
 import { h,render,Component } from "preact";
-import $, { data } from 'jquery';
+import {Router, Link, Route} from 'preact-router';
+import $ from 'jquery';
 import Item from '../item';
+import style from './style';
 
 export default class More extends Component{
 
@@ -10,6 +12,7 @@ export default class More extends Component{
         
     }
 
+    //fetch the information for weather forcast, the one in 'home' is current weather
     fetchWeatherForcast= () =>{
         //url to get weather data: http://api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
         //url for API instructions: https://openweathermap.org/forecast5
@@ -36,8 +39,12 @@ export default class More extends Component{
     render(){ 
         const location = this.props.where
         return(
-            <div>
-                <p>{location}</p>
+            <div class={style.body}>
+                <Router>
+                    <Route path='/home/:where?' />
+                </Router>
+                <Link href={`/home/?where=${location}`}><img src='../assets/icons/house-solid.png' class={style.houseImg}></img></Link>
+                <p class={style.cityName}>{location}</p>
                 <label>Weather Forcast(every 3h)</label>
                 {this.state.fdata && <Item data={this.state.fdata}/>}
             </div>   
