@@ -101,17 +101,15 @@ export default class Home extends Component {
 	}
 
 	changeBackground = (icon) => {
-		if(icon == "01d" || icon == "01n"){
+		if(icon == "sunrise.png" || icon == "01n"){
 			document.body.style.backgroundImage = "url('../assets/backgrounds/sunny.jpg')";
-		}else if(icon == "02d" || icon == "02n"){
+		}else if(icon == "sunset.png" || icon == "02n"){
 			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
-		}else if(icon == "03d" || icon == "03n"){
+		}else if(icon == "Visibility-icon.png" || icon == "03n"){
 			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
-		}else if(icon == "04d" || icon == "04n"){
-			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
-		}else if(icon == "09d" || icon == "09n"){
+		}else if(icon == "Rain.png" || icon == "04n"){
 			document.body.style.backgroundImage = "url('../assets/backgrounds/rainy.jpg')";
-		}else if(icon == "10d" || icon == "10n"){
+		}else if(icon == "Wind-icon.png" || icon == "05n"){
 			document.body.style.backgroundImage = "url('../assets/backgrounds/rainy.jpg')";
 		}
 
