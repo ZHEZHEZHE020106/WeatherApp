@@ -35,9 +35,12 @@ export default class Home extends Component {
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
-			success : this.parseResponse,
+			success : this.parseResponse, // this.parseResponse is defined below
 			error : function(req, err){ console.log('API call failed ' + err); }
 		})
+
+		
+
 	}
 
 	
@@ -49,6 +52,8 @@ export default class Home extends Component {
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 		const icon = this.state.icon;
 		const locate = this.state.locate;
+		// change background image according to the weather condition
+		this.changeBackground(icon);
 		// display all weather data
 		return (
 			<div class={ style.body}>
@@ -94,6 +99,24 @@ export default class Home extends Component {
 			feel: feel
 		});
 	}
+
+	changeBackground = (icon) => {
+		if(icon == "01d" || icon == "01n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/sunny.jpg')";
+		}else if(icon == "02d" || icon == "02n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
+		}else if(icon == "03d" || icon == "03n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
+		}else if(icon == "04d" || icon == "04n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/cloudy.jpg')";
+		}else if(icon == "09d" || icon == "09n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/rainy.jpg')";
+		}else if(icon == "10d" || icon == "10n"){
+			document.body.style.backgroundImage = "url('../assets/backgrounds/rainy.jpg')";
+		}
+
+	}
+
 	// 3 methods to display the date
 	getDay(){
 		const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -102,12 +125,15 @@ export default class Home extends Component {
 		return day;
 	}
 
+
+	//redundant method
 	getDate(){
 		const t = new Date();
 		let date = t.getDate();
 		return date.toString();
 	}
 
+	//redundant method
 	getMonth(){
 		const Month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		const d = new Date();
